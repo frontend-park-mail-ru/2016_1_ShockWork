@@ -21,12 +21,7 @@
     "start": "node server"
   },
   "dependencies": {
-<<<<<<< HEAD
     "errorhandler": "^1.4.3",
     "express": "^4.13.4"
-=======
-    "express-http-proxy": "^0.6.0",
-    "express-rewrite": "0.0.4"
->>>>>>> upstream/v1
   }
 }
