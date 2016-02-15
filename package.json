@@ -12,5 +12,9 @@
   },
   "scripts": {
     "start": "node server"
+  },
+  "dependencies": {
+    "errorhandler": "^1.4.3",
+    "express": "^4.13.4"
   }
 }
