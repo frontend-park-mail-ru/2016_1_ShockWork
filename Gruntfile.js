@@ -3,6 +3,9 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
 		shell: {
+            server: {
+                command: 'node server.js'
+            }
 			// запуск сервера через скрипт shell'a https://www.npmjs.com/package/grunt-shell
 		},
 

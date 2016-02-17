@@ -12,7 +12,7 @@ var callback = function (req, res, done) {
 	// (журналирование - вывод в консоль)
 	// [время] [номер запроса по счету]
 
-	console.log("[%s] [%s]", new Date(), ++callback.counter);
+	console.log("[%s] [%d]", new Date(), ++callback.counter);
 	done();
 }
 
