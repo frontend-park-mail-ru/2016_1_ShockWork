@@ -38,7 +38,7 @@ module.exports = function (grunt) {
                 options: {
                     template: function (data) {
                         return grunt.template.process(
-                            'var <%= name %>Tmpl = <%= contents %> ;',
+                            'define(function () { return <%= contents %> ; });',
                             {data: data}
                         );
                     }
@@ -50,6 +50,7 @@ module.exports = function (grunt) {
 
 	// подключть все необходимые модули
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-fest');
@@ -57,4 +58,5 @@ module.exports = function (grunt) {
     // результат команды grunt
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.registerTask('default', ['concurrent:target']);
+
 };

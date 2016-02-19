@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div id="main" style = "color: red">
         <h1>Привет</h1>
         <h2> Я прогаю, пока Санек выебывается перед Лехой</h2>
         <h3> Потому что он пидор и хочет респекта </h3>
     </div>
+=======
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+>>>>>>> upstream/v2
 </fest:template>
