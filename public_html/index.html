@@ -14,7 +14,12 @@
         <h1>Hello world!</h1>
     </div>
     <script>
+
         var $page = $('#page');
-        showMainScreen();
+        $page.on("click", "a[href]", function (event) {
+            var name  = $(event.target).attr('href').slice(1);
+
+        });
     </script>
+
 </body></html>
