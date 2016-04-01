@@ -16,37 +16,52 @@ define([
         },
 
         template: tmpl,
-        initialize: function () {
 
+        initialize: function () {
+            this.render();
         },
         render: function () {
             this.$el.html(this.template());
-            return this;
+        },
+        show: function() {
+            this.$el.show();
+        },
+        hide: function() {
+            this.$el.hide();
         },
         goBack: function() {
             Backbone.history.history.back()
         },
 
         submit: function(e) {
+
             e.preventDefault();
+
+            var $this = this;
 
             var username = $('#username').val();
             var password = $('#password').val();
 
-            if ( session.validateLogin(username, password) ) {
+            var valid = session.validateLogin(username, password);
 
-                session.login(username, password);
-                $(window).ajaxError(function() {
-                        $('.form__error').hide();
-                        $('.js-login-error').show();
-                });
-                $(window).ajaxSuccess(
-                    function() {
-                        Backbone.history.navigate('game', { trigger: true })
-                });
+            if ( valid === 'None' ) {
+
+                session.login(username, password)
+                    .done(function() {
+                        Backbone.history.navigate('game', { trigger: true });
+                    })
+                    .fail(function(){
+                        $this.$el.find('.form__error').hide();
+                        $this.$el.find('.form__login__error').show();
+                    });
 
             } else {
-                 this.$el.find('.js-username-error, .js-password-error').text('Required').show();
+
+                this.$el.find('.form__error').hide();
+                valid.forEach(function (item) {
+                    $('.form__'+ item +'__error').text("Required").show()
+                });
+
             }
 
         }

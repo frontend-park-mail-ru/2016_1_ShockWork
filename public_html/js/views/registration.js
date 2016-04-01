@@ -3,64 +3,80 @@ define([
     'tmpl/registration',
     'models/session',
     'materialize'
-], function(
-    Backbone,
-    tmpl,
-    session
-){
+], function (Backbone,
+             tmpl,
+             session) {
     var View = Backbone.View.extend({
         events: {
-            "click .js-go-back":   "goBack",
+            "click .js-go-back": "goBack",
             "submit .form": "submit"
         },
 
         template: tmpl,
         initialize: function () {
-
+            this.render()
         },
         render: function () {
             this.$el.html(this.template());
-            return this;
         },
-        goBack: function() {
+        show: function() {
+            this.$el.show();
+        },
+        hide: function() {
+            this.$el.hide();
+        },
+        goBack: function () {
             Backbone.history.history.back();
         },
-        submit: function(e) {
+        submit: function (e) {
+
             e.preventDefault();
+
+            var $this = this;
 
             var email = $('#email').val();
             var username = $('#username').val();
-            var password1 = $('#password').val();
-            var password2 = $('#password_conformation').val();
+            var password1 = $('#password1').val();
+            var password2 = $('#password2').val();
 
             var valid = session.validateRegistration(email, username, password1, password2);
-            if ( valid['fields'] === 'None' ) {
 
-                session.registration(username, password1, email);
-                $(window).ajaxError(function() {
-                        $('.form__error').hide();
-                        $('.js-login-error').show();
-                });
-                $(window).ajaxSuccess(
-                    function() {
-                        Backbone.history.navigate('game', { trigger: true })
+            if (valid === 'None') {
+
+                session.registration(username, password1, email).done(function() {
+                    $this.$el.find('.form__error').hide();
+                    $this.$el.find('.form__user__create__error').show();
+                })
+                .fail(function(){
+                    Backbone.history.navigate('game', {trigger: true})
                 });
 
-            } else if( valid['fields'] === 'passwords' ) {
+            } else if ( Array.isArray(valid) ) {
+                this.$el.find('.form__error').hide();
+                valid.forEach(function (item) {
+                    $('.form__'+ item +'__error').text("Required").show()
+                });
+            } else if (valid === 'passwords') {
 
                 this.$el.find('.form__error').hide();
-                this.$el.find('.js-password1-error, .js-password2-error').text(valid['error']).show();
+                this.$el.find('.form__password1__error, .form__password2__error').text('Passwords dont match').show();
 
-            } else if ( valid['fields'] === 'email' ) {
+            } else if (valid === 'bad_email') {
 
                 this.$el.find('.form__error').hide();
-                this.$el.find('.js-email-error').text(valid['error']).show();
+                this.$el.find('.form__email__error').text('Example lala@mail.ru').show();
 
-            } else if ( valid['fields'] === 'all' ) {
+            } else if (valid === 'all') {
 
-                this.$el.find('.form__error').text(valid['error']).show();
+                this.$el.find('.form__error').hide();
+                $.each(this.$el.find('.js-validate'), function () {
+                    if ($(this).val() === '') {
+                        $(this).parent().find('.form__error').text("Required").show()
+                    }
+                });
 
             }
+
         }
     });
 
