@@ -1,13 +1,37 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="http://web-boss.info" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="css/reset.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/template.css" rel="stylesheet"/>
+    <link href="css/jquery-ui.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="css/cards/jquery-ui.css" />
-    <link rel="stylesheet" href="css/cards/reset.css" />
-    <link rel="stylesheet" href="css/cards/style.css" />
-    <link rel="stylesheet" href="css/cards/template.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <!--FONT Awesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+        .button-finish{
+            height: 188px;
+            width: 175px;
+            background-image: url(img/Button_not_down.png);
+            background-size: contain;
+            position: absolute;
+            left: 553px;
+            top: 278px;
+        }
+        .button-finish:hover{
+            background-image: url(img/Button_downed.png);
+        }
 
-    <div id="game" class="row">
-        <div id="wrapper">
+    </style>
+
+</head>
+<body>
+<div id="wrapper">
 
     <div class="row">
         <div class="container">
@@ -43,7 +67,7 @@
                                                                             top: 540px;
                                                                             left: 610px;
                                                                             display:none;">
-                    <img src="img/cards/button.png" height="60" width="60">
+                    <img src="img/button.png" height="60" width="60">
                         <span style = "position: absolute;
                                                 top: 14px;
                                                     left: 17px;
@@ -63,8 +87,23 @@
         </div>
     </div>
 </div>
-    </div>
 
-<fest:script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"/>
 
-</fest:template>
+<!--JS-->
+
+<!--[if IE 6]>
+<script type="text/javascript" src="/js/ie6fix.js"></script>
+<script type="text/javascript">DD_belatedPNG.fix('.png24');</script>
+<![endif]-->
+<!--[if lt IE 9]>
+<script src="/js/html5.js"></script>
+<script src="/js/css3-mediaqueries.js"></script>
+<![endif]-->
+<script src="js/jquery-latest.min.js" type="text/javascript" ></script>
+<script src="js/function.js" type="text/javascript"></script>
+<script src="js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="js/jquery-ui.js" type="text/javascript"></script>
+
+<!--.JS-->
+</body>
+</html>
