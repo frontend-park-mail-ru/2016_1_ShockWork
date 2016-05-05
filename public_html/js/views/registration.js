@@ -2,18 +2,28 @@ define([
     'backbone',
     'tmpl/registration',
     'models/session',
+    'views/view_manager',
     'materialize'
-], function (Backbone,
-             tmpl,
-             session) {
+], function (
+    Backbone,
+    tmpl,
+    session,
+    manager
+) {
+
+
     var View = Backbone.View.extend({
         events: {
             "click .js-go-back": "goBack",
-            "submit .form": "submit"
+            "submit .form": "submit",
+            "click .js-make-photo": "makePhoto",
+            "js-video": "show"
         },
 
         template: tmpl,
+
         initialize: function () {
+            manager.register(this);
             this.render()
         },
         render: function () {
@@ -21,12 +31,34 @@ define([
         },
         show: function() {
             this.$el.show();
+            this.initialize_avatar();
+            this.trigger("show",this);
+
         },
         hide: function() {
             this.$el.hide();
         },
         goBack: function () {
             Backbone.history.history.back();
+        },
+        initialize_avatar: function() {
+            this.canvas = this.$el.find("#canvas");
+            this.context = this.canvas[0].getContext('2d');
+            this.video = this.$el.find("#video");
+            this.videoObj = { "video": true };
+            if (navigator.webkitGetUserMedia) { //
+                navigator.webkitGetUserMedia(this.videoObj, function (stream) {
+                    this.video.src = window.webkitURL.createObjectURL(stream);
+                    this.video.play();
+                }, function () {
+                    console.log('please switch on camera')
+                }).bind(this);
+            }
+        },
+        makePhoto: function(){
+
+            this.context.drawImage(this.video, 0, 0, 640, 480);
+
         },
         submit: function (e) {
 
@@ -38,17 +70,18 @@ define([
             var username = $('#username').val();
             var password1 = $('#password1').val();
             var password2 = $('#password2').val();
+            var imgData = $('#imgData').val();
 
-            var valid = session.validateRegistration(email, username, password1, password2);
+            var valid = session.validateRegistration(email, username, password1, password2,imgData);
 
             if (valid === 'None') {
 
                 session.registration(username, password1, email).done(function() {
-                    $this.$el.find('.form__error').hide();
-                    $this.$el.find('.form__user__create__error').show();
+                	Backbone.history.navigate('game', {trigger: true});
                 })
                 .fail(function(){
-                    Backbone.history.navigate('game', {trigger: true})
+                    $this.$el.find('.form__error').hide();
+                    $this.$el.find('.form__user__create__error').show();
                 });
 
             } else if ( Array.isArray(valid) ) {
@@ -78,6 +111,7 @@ define([
             }
 
         }
+
     });
 
     return new View();

@@ -23,21 +23,17 @@ define([
         },
 
         logout: function () {
-            $.ajax({
-                type: 'DELETE',
-                url: this.urlLogin,
-                success: function () {
-                    //    TODO
-                },
-                error: function () {
-                    //    TODO
-                }
-
+            return this.save({}, {
+                type: 'GET',
+                wait: true,
+                url: this.urlLogin
             });
         },
 
-        registration: function (username, password, email) {
-            return this.save({ login: username, password: password, email: email}, {
+        registration: function (username, password, email, imgData)
+
+         {
+            return this.save({ login: username, password: password, email: email, imgData:imgData}, {
                 type: 'PUT',
                 wait: true,
                 url: this.urlRegistration

@@ -1,26 +1,23 @@
 define([
-    'backbone',
-    'views/main',
-    'views/game',
-    'views/login',
-    'views/scoreboard',
-    'views/registration'
+    'backbone'
 ], function(
-    Backbone,
-    mainView,
-    gameView,
-    loginView,
-    scoreboardView,
-    registrationView
+    Backbone
 ){
 
     var View = Backbone.View.extend({
 
-        views: [ mainView, gameView, loginView, scoreboardView, registrationView ],
+        views: [],
 
-        display: function () {
-            _.each(this.views || [], function(view) {
-                view.hide();
+        register: function (currentView) {
+            this.views.push(currentView);
+            this.listenTo(currentView, 'show', this.onShow.bind(this, currentView));
+        },
+
+        onShow: function (currentView) {
+            this.views.forEach(function (view) {
+                if (view !== currentView) {
+                    view.hide();
+                }
             });
         }
     });

@@ -9,12 +9,11 @@ require.config({
         hammerjs: 'lib/hammerjs',
         jquery_ui: 'lib/cards/jquery-ui',
         gameplay: 'lib/cards/function',
-        la: 'lib/cards/jquery-latest.min',
-        la1: 'lib/cards/jquery-1.10.2'
+        socket: 'webSocket/webSocket',
     },
     shim: {
         'backbone': {
-            deps: ['underscore', 'jquery'],
+            deps: ['underscore', 'jquery', 'jquery_ui'],
             exports: 'Backbone'
         },
         'underscore': {
@@ -34,5 +33,13 @@ define([
     Backbone,
     router
 ){
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./js/serviceWorker.js').then(function(reg) {
+            console.log('Registration succeeded. Scope is ' + reg.scope);
+        }).catch(function(error) {
+            console.log('Registration failed with ' + error);
+        });
+    }
+
     Backbone.history.start();
 });
