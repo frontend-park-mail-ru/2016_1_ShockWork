@@ -1,10 +1,18 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
 
     <link rel="stylesheet" href="css/cards/jquery-ui.css" />
-    <link rel="stylesheet" href="css/cards/reset.css" />
     <link rel="stylesheet" href="css/cards/style.css" />
     <link rel="stylesheet" href="css/cards/template.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+
+    <!--=======loader=================================-->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <!--==============================================-->
 
     <div id="game" class="row">
         <div id="wrapper">
@@ -13,7 +21,7 @@
         <div class="container">
             <div id = "user_stack" class="leftBar fl" style="">
             </div>
-            <div class="rightBar fr">
+            <div class="js-insert-back rightBar fr">
 
             </div>
 
@@ -65,6 +73,6 @@
 </div>
     </div>
 
-<fest:script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"/>
+
 
 </fest:template>

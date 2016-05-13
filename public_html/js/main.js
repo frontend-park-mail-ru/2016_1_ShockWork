@@ -7,14 +7,11 @@ require.config({
         backbone: "lib/backbone",
         materialize: 'lib/materialize.min',
         hammerjs: 'lib/hammerjs',
-        jquery_ui: 'lib/cards/jquery-ui',
-        gameplay: 'lib/cards/function',
-        la: 'lib/cards/jquery-latest.min',
-        la1: 'lib/cards/jquery-1.10.2'
+        jquery_ui: 'lib/cards/jquery-ui'
     },
     shim: {
         'backbone': {
-            deps: ['underscore', 'jquery'],
+            deps: ['underscore', 'jquery', 'jquery_ui'],
             exports: 'Backbone'
         },
         'underscore': {
@@ -34,5 +31,17 @@ define([
     Backbone,
     router
 ){
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(
+           '/appCache.js'
+        ).then(function(registration) {
+            console.log('ServiceWorker registration');
+        }).catch(function(err) {
+             console.log('ServiceWorker registration failed');
+        });
+    }
+
+
+
     Backbone.history.start();
 });

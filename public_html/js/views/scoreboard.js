@@ -18,10 +18,16 @@ define([
             this.render();
         },
         render: function () {
-            this.$el.html(this.template( { scores : ScoresCollection.toJSON() } ));
+            var newThis = this;
+            ScoresCollection.fetch({remove: false})
+                .done( function(){
+                    newThis.$el.html(newThis.template( { scores : ScoresCollection.toJSON() } ));
+                });
+
         },
         show: function() {
             this.$el.show();
+            this.trigger("show",this);
         },
         hide: function() {
             this.$el.hide();

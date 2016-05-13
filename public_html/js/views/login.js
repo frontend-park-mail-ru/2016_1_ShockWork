@@ -25,6 +25,7 @@ define([
         },
         show: function() {
             this.$el.show();
+            this.trigger("show",this);
         },
         hide: function() {
             this.$el.hide();

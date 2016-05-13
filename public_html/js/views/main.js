@@ -15,8 +15,8 @@ define([
             this.$el.html(this.template());
         },
         show: function() {
-            this.delegateEvents();
             this.$el.show();
+            this.trigger("show",this);
         },
         hide: function() {
             this.$el.hide();
