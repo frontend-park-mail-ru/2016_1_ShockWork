@@ -1,31 +1,29 @@
 define([
-    'backbone',
     'tmpl/login',
     'models/session',
     'materialize'
 ], function(
-    Backbone,
     tmpl,
     session
-){
+) {
 
     var View = Backbone.View.extend({
         events: {
-            "click .js-go-back":   "goBack",
+            "click .js-go-back": "goBack",
             "submit .form": "submit"
         },
 
         template: tmpl,
 
-        initialize: function () {
+        initialize: function() {
             this.render();
         },
-        render: function () {
+        render: function() {
             this.$el.html(this.template());
         },
         show: function() {
             this.$el.show();
-            this.trigger("show",this);
+            this.trigger("show", this);
         },
         hide: function() {
             this.$el.hide();
@@ -40,18 +38,20 @@ define([
 
             var $this = this;
 
-            var username = $('#username').val();
-            var password = $('#password').val();
+            var username = this.$el.find('#username').val();
+            var password = this.$el.find('#password').val();
 
             var valid = session.validateLogin(username, password);
 
-            if ( valid === 'None' ) {
+            if (valid === 'None') {
 
                 session.login(username, password)
                     .done(function() {
-                        Backbone.history.navigate('game', { trigger: true });
+                        Backbone.history.navigate('game', {
+                            trigger: true
+                        });
                     })
-                    .fail(function(){
+                    .fail(function() {
                         $this.$el.find('.form__error').hide();
                         $this.$el.find('.form__login__error').show();
                     });
@@ -59,8 +59,8 @@ define([
             } else {
 
                 this.$el.find('.form__error').hide();
-                valid.forEach(function (item) {
-                    $('.form__'+ item +'__error').text("Required").show()
+                valid.forEach(function(item) {
+                    $this.$el.find('.form__' + item + '__error').text("Обязательное поле").show();
                 });
 
             }
